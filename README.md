@@ -17,9 +17,9 @@ And given a selector-style lambda expression that evaluates to bool (like we mig
 ```
 k => k.AccountId == 123 && k.CreateTime > new DateTime(2012, 3, 4)
 ```
-We can infer by the `==` in the expression that a passing `FileKey`'s `AccountId` must have an invariant value of 123. 
+We can infer by the `==` in the expression that a passing `FileKey`'s `AccountId` must have an *invariant* value of 123. 
 
-Note that we aren't sure what `CreateTime` might be because it is an inequality instead of `==`, so it is not invariant in this sense.
+Note that we aren't sure what `CreateTime` might be because it is an inequality instead of `==`, so it is *not invariant* in this sense.
 
 You can use `InvariantExtractor` to get an instance of the simple type with all of the invariant property values extracted from the lambda.
 
