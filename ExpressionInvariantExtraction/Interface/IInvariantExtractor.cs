@@ -7,7 +7,6 @@ namespace ExpressionInvariantExtraction.Interface
     {
         TObject ExtractInvariants<TObject>(
             Expression<Func<TObject, bool>> inputExpression,
-            out Expression<Func<TObject, bool>> invariantExpression)
-            where TObject : new();
+            out Expression<Func<TObject, bool>> invariantExpression);
     }
 }
