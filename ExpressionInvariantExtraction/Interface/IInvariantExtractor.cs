@@ -7,6 +7,7 @@ namespace ExpressionInvariantExtraction.Interface
     {
         TObject ExtractInvariants<TObject>(
             Expression<Func<TObject, bool>> inputExpression,
-            out Expression<Func<TObject, bool>> invariantExpression);
+            out Expression<Func<TObject, bool>> invariantExpression,
+            TObject cloneSource = default(TObject));
     }
 }

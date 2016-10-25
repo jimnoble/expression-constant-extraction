@@ -1,4 +1,5 @@
-﻿using ExpressionInvariantExtraction.Interface;
+﻿using ExpressionInvariantExtraction.Extensions;
+using ExpressionInvariantExtraction.Interface;
 using Object.Build.Implementation;
 using System;
 using System.Linq.Expressions;
@@ -9,7 +10,8 @@ namespace ExpressionInvariantExtraction.Implementation
     {
         public TObject ExtractInvariants<TObject>(
             Expression<Func<TObject, bool>> inputExpression, 
-            out Expression<Func<TObject, bool>> invariantExpression)
+            out Expression<Func<TObject, bool>> invariantExpression,
+            TObject cloneSource = default(TObject))
         {
             var visitor = new InvariantFindingExpressionVisitor();
 
@@ -17,7 +19,9 @@ namespace ExpressionInvariantExtraction.Implementation
                 .Visit(inputExpression) 
                 as Expression<Func<TObject, bool>>;
 
-            var invariantObjectBuilder = new Builder<TObject>();
+            var invariantObjectBuilder = cloneSource.IsDefaultValue() ?
+                new Builder<TObject>() :
+                new Builder<TObject>(cloneSource);
 
             foreach (var memberValue in visitor.MemberValues)
             {
