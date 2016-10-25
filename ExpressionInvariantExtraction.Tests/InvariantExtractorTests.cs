@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ExpressionInvariantExtraction.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ExpressionInvariantExtraction.Implementation;
-using System.Linq.Expressions;
+using System;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace ExpressionInvariantExtraction.Tests
 {
