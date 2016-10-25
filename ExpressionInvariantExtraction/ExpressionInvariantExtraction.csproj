@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DefaultValueExtensions.cs" />
+    <Compile Include="Extensions\ObjectBuildExtensions.cs" />
     <Compile Include="Implementation\InvariantFindingExpressionVisitor.cs" />
     <Compile Include="Implementation\InvariantExtractor.cs" />
     <Compile Include="Interface\IInvariantExtractor.cs" />
