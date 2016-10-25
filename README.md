@@ -76,5 +76,5 @@ var original = new FileKey
 
 var mutant = original.Mutate(o => o.AccountId == 2345);
 ```
-Here `mutant` will have the updated `AccountId` of `2345`, while its `CreateTime` property will remain `1/1/1980`, 
-identical to the original.
+Here `mutant` will have the updated `AccountId` of `2345`, while its `CreateTime` property will be `1/1/1980`, 
+identical to `original`'s.
