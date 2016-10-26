@@ -13,7 +13,7 @@ namespace ExpressionInvariantExtraction.Implementation
             out Expression<Func<TObject, bool>> invariantExpression,
             TObject cloneSource = default(TObject))
         {
-            var visitor = new InvariantFindingExpressionVisitor();
+            var visitor = new InvariantFindingExpressionVisitor<TObject>(cloneSource);
 
             invariantExpression = visitor
                 .Visit(inputExpression) 

@@ -5,14 +5,27 @@ using System.Reflection;
 
 namespace ExpressionInvariantExtraction.Implementation
 {
-    class InvariantFindingExpressionVisitor : ExpressionVisitor
+    class InvariantFindingExpressionVisitor<TObject> : ExpressionVisitor
     {
         List<Tuple<PropertyInfo, object>> _propertyValues = 
             new List<Tuple<PropertyInfo, object>>();
 
+        readonly TObject _cloneSource;
+
+        public InvariantFindingExpressionVisitor(
+            TObject cloneSource = default(TObject))
+        {
+            _cloneSource = cloneSource;
+        }
+
         public IReadOnlyList<Tuple<PropertyInfo, object>> MemberValues
         {
             get { return _propertyValues; }
+        }
+
+        protected override Expression VisitParameter(ParameterExpression node)
+        {
+            return base.VisitParameter(node);
         }
 
         protected override Expression VisitBinary(BinaryExpression node)
@@ -61,13 +74,19 @@ namespace ExpressionInvariantExtraction.Implementation
             return base.VisitBinary(node);
         }
 
-        static object EvaluateExpressionValue(Expression valueExpression)
+        object EvaluateExpressionValue(Expression valueExpression)
         {
-            var lambda = Expression.Lambda(valueExpression);
+            var parameter = new ParameterFindingExpressionVisitor().FindFirstParameter(valueExpression);
+
+            var lambda = parameter == null ?
+                Expression.Lambda(valueExpression) :
+                Expression.Lambda(valueExpression, parameter);
 
             var compiled = lambda.Compile();
 
-            return compiled.DynamicInvoke();
+            return parameter == null ?
+                compiled.DynamicInvoke() :
+                compiled.DynamicInvoke(_cloneSource);
         }
     }
 }
